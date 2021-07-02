@@ -9,8 +9,17 @@ class Node(object):
         self.size = size
         self.color = WHITE
 
+    def make_start(self):
+        self.color = YELLOW
+
+    def make_end(self):
+        self.color = BLUE
+
     def make_obstacle(self):
         self.color = BLACK
+
+    def reset(self):
+        self.color = WHITE
 
     def draw(self):
         pygame.draw.rect(self.win, self.color, (self.x, self.y, self.size, self.size))
