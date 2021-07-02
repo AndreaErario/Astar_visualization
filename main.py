@@ -30,6 +30,10 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+        if event.type == pygame.KEYDOWN:
+            for x in grid:
+                for y in x:
+                    y.set_neighbors(grid)
     
     pos = pygame.mouse.get_pos()
     col, row = pos[0] // node_size, pos[1] // node_size
