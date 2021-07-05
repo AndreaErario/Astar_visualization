@@ -1,6 +1,7 @@
 import pygame
 from node import Node
 from assets.colors import *
+from operator import itemgetter
 
 pygame.init()
 win_size = 600
@@ -13,6 +14,37 @@ run = True
 grid = []
 start = ()
 end = ()
+
+heuristic = lambda p1, p2: abs(p1[0] - p2[0]) + abs(p1[1] - p2[1])
+
+def a_star():
+    open_list = []
+    closed_list = []
+    g = 0
+    open_list.append((heuristic(start, end) + g, grid[start[0]][start[1]]))
+    while open_list:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+
+        g += 1
+        open_list.sort(key=itemgetter(0))
+        current = open_list.pop(0)
+
+        if current[1] == grid[end[0]][end[1]]:
+            break
+
+        for x in current[1].neighbors:
+            if not x in closed_list:
+                open_list.append((heuristic((x.x // node_size, x.y // node_size), end) + g, x))
+                if not x == grid[start[0]][start[1]] and not x == grid[end[0]][end[1]]:
+                    x.make_open()
+
+        closed_list.append(current[1])
+        if not current[1] == grid[start[0]][start[1]] and not current[1] == grid[end[0]][end[1]]:
+            current[1].make_closed()
+
+        draw()
 
 def draw():
     win.fill((0, 0, 0))
@@ -30,10 +62,11 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-        if event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN and start and end:
             for x in grid:
                 for y in x:
                     y.set_neighbors(grid)
+            a_star()
     
     pos = pygame.mouse.get_pos()
     col, row = pos[0] // node_size, pos[1] // node_size

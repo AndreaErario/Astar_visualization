@@ -22,6 +22,12 @@ class Node(object):
     def reset(self):
         self.color = WHITE
 
+    def make_open(self):
+        self.color = GREEN
+
+    def make_closed(self):
+        self.color = RED
+
     def is_start(self):
         return self.color == YELLOW
 
