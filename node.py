@@ -9,6 +9,7 @@ class Node(object):
         self.size = size
         self.color = WHITE
         self.neighbors = []
+        self.came_from = None
 
     def make_start(self):
         self.color = YELLOW
@@ -27,6 +28,9 @@ class Node(object):
 
     def make_closed(self):
         self.color = RED
+
+    def make_path(self):
+        self.color = ORANGE
 
     def is_start(self):
         return self.color == YELLOW
