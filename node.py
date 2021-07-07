@@ -1,6 +1,7 @@
 import pygame
 from assets.colors import *
 
+
 class Node(object):
     def __init__(self, win, x, y, size):
         self.win = win
@@ -43,13 +44,13 @@ class Node(object):
 
     def set_neighbors(self, grid):
         col, row = self.x // self.size, self.y // self.size
-        
+
         if col > 0 and not grid[col - 1][row].is_obstacle():
             self.neighbors.append(grid[col - 1][row])
-        
+
         if col < len(grid) - 1 and not grid[col + 1][row].is_obstacle():
             self.neighbors.append(grid[col + 1][row])
-        
+
         if row < len(grid) - 1 and not grid[col][row + 1].is_obstacle():
             self.neighbors.append(grid[col][row + 1])
 
