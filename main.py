@@ -77,11 +77,23 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-        if event.type == pygame.KEYDOWN and start and end:
-            for x in grid:
-                for y in x:
-                    y.set_neighbors(grid)
-            a_star()
+        if event.type == pygame.KEYDOWN:
+            if event.key in [pygame.K_s, pygame.K_SPACE]:
+                for x in grid:
+                    for y in x:
+                        y.set_neighbors(grid)
+                a_star()
+            if event.key == pygame.K_r:
+                start = ()
+                end = ()
+                for col in grid:
+                    for node in col:
+                        node.reset()
+            if event.key == pygame.K_c:
+                for col in grid:
+                    for node in col:
+                        if node.color in [RED, GREEN, ORANGE]:
+                            node.reset()
     
     pos = pygame.mouse.get_pos()
     col, row = pos[0] // node_size, pos[1] // node_size
